@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockPro Dashboard - Smart Inventory Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <i class="fas fa-boxes-stacked"></i>
+                <h2>StockPro</h2>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-th-large"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="products">
+                    <i class="fas fa-box"></i>
+                    <span>Products</span>
+                </a>
+                <a href="#" class="nav-item" data-page="sales">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Sales</span>
+                </a>
+                <a href="#" class="nav-item" data-page="stock-in">
+                    <i class="fas fa-arrow-trend-up"></i>
+                    <span>Stock In</span>
+                </a>
+                <a href="#" class="nav-item" data-page="alerts">
+                    <i class="fas fa-bell"></i>
+                    <span>Alerts</span>
+                    <span class="badge" id="alertBadge">0</span>
+                </a>
+                <a href="#" class="nav-item" data-page="reports">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="nav-item" data-page="suppliers">
+                    <i class="fas fa-truck"></i>
+                    <span>Suppliers</span>
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="#" class="nav-item" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="globalSearch" placeholder="Search products, sales, suppliers...">
+                </div>
+                
+                <div class="top-bar-right">
+                    <div class="notification-icon">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count" id="notificationCount">0</span>
+                    </div>
+                    <div class="user-menu">
+                        <img src="https://via.placeholder.com/40" alt="User" class="user-avatar">
+                        <span class="user-name" id="userName">Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Page Content -->
+            <div class="page-content" id="pageContent">
+                <!-- Dashboard Overview -->
+                <div class="page active" id="dashboard-page">
+                    <div class="page-header">
+                        <h1>Dashboard Overview</h1>
+                        <p>Welcome back! Here's what's happening with your inventory today.</p>
+                    </div>
+                    
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card gradient-blue">
+                            <div class="stat-icon">
+                                <i class="fas fa-boxes-stacked"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Total Products</h3>
+                                <p class="stat-number" id="totalProducts">0</p>
+                                <span class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> 12%
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card gradient-green">
+                            <div class="stat-icon">
+                                <i class="fas fa-shopping-cart"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Today's Sales</h3>
+                                <p class="stat-number" id="todaySales">$0</p>
+                                <span class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> 8%
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card gradient-orange">
+                            <div class="stat-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Low Stock Items</h3>
+                                <p class="stat-number" id="lowStockItems">0</p>
+                                <span class="stat-change negative">
+                                    <i class="fas fa-exclamation-circle"></i> Needs attention
+                                </span>
+                            </div>
+                        </div>
+                        
+                        <div class="stat-card gradient-purple">
+                            <div class="stat-icon">
+                                <i class="fas fa-dollar-sign"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h3>Monthly Revenue</h3>
+                                <p class="stat-number" id="monthlyRevenue">$0</p>
+                                <span class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i> 15%
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Charts -->
+                    <div class="charts-grid">
+                        <div class="chart-card">
+                            <h3>Sales Overview</h3>
+                            <canvas id="salesChart"></canvas>
+                        </div>
+                        <div class="chart-card">
+                            <h3>Revenue by Category</h3>
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <!-- Recent Activities -->
+                    <div class="recent-activities">
+                        <div class="activity-section">
+                            <h3>Top Selling Products</h3>
+                            <div class="activity-list" id="topProducts"></div>
+                        </div>
+                        <div class="activity-section">
+                            <h3>Recent Stock Movements</h3>
+                            <div class="activity-list" id="recentMovements"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products Page -->
+                <div class="page" id="products-page">
+                    <div class="page-header">
+                        <div>
+                            <h1>Products Management</h1>
+                            <p>Manage your product inventory and stock levels</p>
+                        </div>
+                        <button class="btn-primary" id="addProductBtn">
+                            <i class="fas fa-plus"></i> Add Product
+                        </button>
+                    </div>
+                    
+                    <div class="table-container">
+                        <div class="table-toolbar">
+                            <div class="table-filters">
+                                <select id="categoryFilter">
+                                    <option value="">All Categories</option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Furniture">Furniture</option>
+                                    <option value="Office Supplies">Office Supplies</option>
+                                </select>
+                                <label class="switch-label">
+                                    <input type="checkbox" id="lowStockFilter">
+                                    <span>Show Low Stock Only</span>
+                                </label>
+                            </div>
+                            <button class="btn-secondary" id="exportProducts">
+                                <i class="fas fa-download"></i> Export CSV
+                            </button>
+                        </div>
+                        
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>SKU</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productsTableBody"></tbody>
+                        </table>
+                        
+                        <div class="pagination" id="productsPagination"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal" id="addProductModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Add New Product</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <form id="addProductForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Product Name *</label>
+                        <input type="text" name="product_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>SKU *</label>
+                        <input type="text" name="sku" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category</label>
+                        <select name="category">
+                            <option value="Electronics">Electronics</option>
+                            <option value="Furniture">Furniture</option>
+                            <option value="Office Supplies">Office Supplies</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Unit Price *</label>
+                        <input type="number" step="0.01" name="unit_price" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Initial Stock</label>
+                        <input type="number" name="current_stock" value="0">
+                    </div>
+                    <div class="form-group">
+                        <label>Reorder Level</label>
+                        <input type="number" name="reorder_level" value="10">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Supplier</label>
+                    <input type="text" name="supplier">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea name="description" rows="3"></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-secondary modal-close">Cancel</button>
+                    <button type="submit" class="btn-primary">Add Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

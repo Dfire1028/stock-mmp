@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StockPro - Smart Inventory Management</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo">
+                    <i class="fas fa-boxes-stacked"></i>
+                    <h1>StockPro</h1>
+                </div>
+                <p class="tagline">Smart Inventory, Smart Business</p>
+            </div>
+            
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">
+                        <i class="fas fa-user"></i>
+                        Username
+                    </label>
+                    <input type="text" id="username" name="username" required placeholder="Enter your username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">
+                        <i class="fas fa-lock"></i>
+                        Password
+                    </label>
+                    <input type="password" id="password" name="password" required placeholder="Enter your password">
+                </div>
+                
+                <div class="form-options">
+                    <label class="remember-me">
+                        <input type="checkbox" id="remember">
+                        <span>Remember me</span>
+                    </label>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+                
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+            </form>
+            
+            <div class="login-footer">
+                <p>Don't have an account? <a href="#" id="showRegister">Create Account</a></p>
+                <p class="version">v2.0.1</p>
+            </div>
+        </div>
+        
+        <div class="login-features">
+            <div class="feature-item">
+                <i class="fas fa-chart-line"></i>
+                <div>
+                    <h3>Real-Time Analytics</h3>
+                    <p>Track your inventory and sales in real-time</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-bell"></i>
+                <div>
+                    <h3>Smart Alerts</h3>
+                    <p>Never run out of stock with intelligent notifications</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-mobile-alt"></i>
+                <div>
+                    <h3>Mobile Ready</h3>
+                    <p>Manage your business from anywhere, anytime</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
